@@ -1,96 +1,23 @@
-# ✨ Magical Particle Christmas Tree
+# ✨ 记忆圣诞树 (Memory Christmas Tree) - 本地版
 
-> A world-class interactive holiday experience powered by **WebGL (Three.js)**, **GLSL Shaders**, and **Computer Vision (MediaPipe)**.
+这是一个无需安装任何服务器即可运行的 HTML5 版本。
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Tech](https://img.shields.io/badge/Three.js-r160-black)
-![Tech](https://img.shields.io/badge/GLSL-Shaders-purple)
-![Tech](https://img.shields.io/badge/MediaPipe-AI-green)
+## 🚀 如何运行
 
-## 🎄 Overview
+1.  **直接双击** `index.html` 文件，浏览器会自动打开。
+2.  在弹出的权限请求中，允许访问摄像头 (用于手势识别)。
 
-This project is a demonstration of **Generative Art** meets **Creative Technology**. Instead of using traditional 3D models, the tree is constructed from **30,000 GPU-accelerated particles** arranged in a mathematical **Fibonacci Spiral**.
+**注意**: 某些浏览器 (如旧版 Chrome) 可能会因为安全策略在双击打开时阻止摄像头。如果遇到这种情况，请尝试使用 Firefox 或 Microsoft Edge，或者搭建一个简单的本地服务器。
 
-The experience is fully interactive via webcam, allowing users to control the particle simulation using hand gestures.
+## 📸 功能说明
 
-## 🎮 Interaction & Gestures
+1.  **上传照片**: 点击左上角的 "Upload Memories" 按钮，选择本地电脑上的照片（支持多选）。
+2.  **手势控制**:
+    *   **☝️ 单指**: 光标控制，悬停在照片上 1 秒可放大。
+    *   **👐 双手**: 张开/闭合来放大或缩小场景。
+    *   **✊✊ 双拳**: 切换 混沌模式 / 圣诞树时间轴模式。
 
-Ensure your webcam is enabled and stand back slightly. The AI tracks your hand in real-time.
-
-| Gesture | Action | Visual Effect |
-| :--- | :--- | :--- |
-| **🖐️ Open Palm** | **EXPLODE** | The tree shatters into chaos, particles fly outward into space. |
-| **✊ Fist** | **REBUILD** | Gravity restores order; particles swirl back into the Golden Ratio spiral. |
-| **👌 Pinch** | **FOCUS** | The camera smoothly zooms in (Dolly Zoom) to view your memories. |
-| **👋 Hand Pan** | **ROTATE** | Move your hand left/right to rotate the tree holographically. |
-
-## 📸 Features
-
-*   **Custom GLSL Shaders:** All particle movement (Explosion, Hover, Twinkle) is calculated on the GPU via Vertex Shaders for 60FPS performance.
-*   **Procedural Generation:** The tree shape is generated mathematically using the Golden Angle ($\pi(3 - \sqrt{5})$).
-*   **Post-Processing:** Cinematic quality achieved using `UnrealBloomPass` and Tone Mapping.
-*   **Memory Upload:** Users can upload local photos, which are instanced as floating cards within the particle volume.
-
-## 🛠️ Tech Stack
-
-*   **Three.js**: 3D Rendering Engine.
-*   **GLSL**: Custom Vertex & Fragment Shaders.
-*   **MediaPipe**: Real-time Machine Learning (Hand Tracking).
-*   **HTML5/ES6**: Modern vanilla JavaScript modules.
-
----
-
-## 🤖 The Prompt
-
-This project was generated using the following prompt, designed for a "World-Class Creative Technologist" persona:
-
-```text
-角色设定：
-你是一位世界级的 Creative Technologist，精通 Three.js (WebGL)、GLSL 着色器逻辑和交互设计。
-
-任务目标：
-创建一个名为 "Magical Christmas Tree" 的 Web 应用。
-
-核心要求：
-1. 视觉表现 (Visuals)：
-   - 严禁使用简单的 Box/Sphere Mesh 堆砌。
-   - 必须实现一个包含 30,000+ 粒子的粒子系统 (Particle System)。
-   - 使用斐波那契螺旋 (Fibonacci Spiral) 算法排列粒子形成树的形状。
-   - 编写自定义 GLSL Shader：
-     - Vertex Shader：处理粒子的呼吸动画、基于深度的尺寸缩放、以及爆炸效果的插值。
-     - Fragment Shader：实现程序化发光圆点和闪烁 (Twinkle) 效果。
-   - 后期处理：使用 UnrealBloomPass 营造强烈的节日辉光感。
-   - 树顶必须有一颗高亮的“伯利恒之星”。
-
-2. 交互设计 (Interaction) - MediaPipe：
-   - 集成 MediaPipe HandLandmarker 进行手势识别。
-   - 定义 4 种具体手势逻辑：
-     1. Open Palm (张开手掌) -> EXPLODE：粒子根据 Shader 中的随机向量向外炸开。
-     2. Fist (握拳) -> REBUILD：粒子受引力牵引重组回螺旋形态。
-     3. Pinch (捏合) -> FOCUS：摄像机平滑推进 (Dolly Zoom)，背景虚化，查看照片。
-     4. Hand Pan (手掌移动) -> ROTATE：控制树的 Y 轴旋转。
-
-3. 功能 (Features)：
-   - 允许用户上传图片 ("Memories")，图片应作为 3D 对象漂浮在粒子树内部。
-   - UI 必须极简、高级 (Cinzel Font)，带有玻璃拟态 (Glassmorphism) 风格。
-
-请确保代码结构清晰，性能优化（GPU 驱动动画），并具有电影级的视觉质感。
-```
-
-## 🚀 Running the Project
-
-Since this project uses ES6 Modules (`import`), you must serve it over a local server (opening `index.html` directly will result in CORS errors).
-
-**Using Python:**
-```bash
-python3 -m http.server
-# Open http://localhost:8000
-```
-
-**Using Node:**
-```bash
-npx serve .
-```
+无需联网，照片仅在本地浏览器内存中处理，刷新页面后消失。
 
 ---
 Generated by Google Gemini 2.5
