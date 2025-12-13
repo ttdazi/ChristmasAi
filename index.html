@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memory Christmas Tree | Local Version</title>
+    <title>记忆圣诞树 | 本地版</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -20,7 +20,8 @@
             margin: 0;
             overflow: hidden;
             background-color: var(--bg);
-            font-family: 'Lato', sans-serif;
+            /* Added Noto Serif SC for Chinese font support */
+            font-family: 'Lato', 'Noto Serif SC', sans-serif;
             color: #fff;
             user-select: none;
         }
@@ -48,7 +49,8 @@
         }
 
         h1 {
-            font-family: 'Cinzel', serif;
+            /* Fallback to Noto Serif SC for Chinese title */
+            font-family: 'Cinzel', 'Noto Serif SC', serif;
             font-size: 3rem;
             margin: 0;
             background: linear-gradient(to bottom, #fff, var(--gold));
@@ -66,7 +68,7 @@
             border: 1px solid var(--gold);
             color: var(--gold);
             padding: 10px 25px;
-            font-family: 'Cinzel', serif;
+            font-family: 'Cinzel', 'Noto Serif SC', serif;
             cursor: pointer;
             transition: all 0.3s;
             text-transform: uppercase;
@@ -84,6 +86,7 @@
             letter-spacing: 4px;
             margin-top: 15px;
             color: rgba(255,255,255,0.6);
+            font-family: 'Noto Serif SC', serif;
         }
 
         .mode-indicator span.active {
@@ -104,10 +107,17 @@
             border-radius: 30px;
             text-align: center;
             transition: all 0.3s;
+            min-width: 200px;
         }
 
         .hint-icon { font-size: 24px; display: block; margin-bottom: 5px; }
-        .hint-text { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #ddd; }
+        .hint-text { 
+            font-size: 14px; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            color: #ddd; 
+            font-family: 'Noto Serif SC', serif;
+        }
 
         /* Loader */
         #loader {
@@ -176,23 +186,23 @@
 
     <div id="loader">
         <div class="spinner"></div>
-        <div style="font-family: 'Cinzel'; color: #ffd700;">INITIALIZING MAGIC</div>
+        <div style="font-family: 'Cinzel', 'Noto Serif SC'; color: #ffd700;">正在构建魔法空间...</div>
     </div>
 
     <div id="ui-layer">
         <header>
-            <h1>Memory Tree</h1>
+            <h1>记忆圣诞树</h1>
             <div class="controls-area">
-                <button class="btn" onclick="document.getElementById('file-input').click()">📸 Upload Memories</button>
+                <button class="btn" onclick="document.getElementById('file-input').click()">📸 上传回忆照片</button>
                 <input type="file" id="file-input" multiple accept="image/*">
             </div>
             <div class="mode-indicator">
-                <span id="mode-chaos">CHAOS</span> // <span id="mode-tree" class="active">TIMELINE</span>
+                <span id="mode-chaos">混沌</span> // <span id="mode-tree" class="active">时间轴</span>
             </div>
         </header>
         <div id="gesture-hint">
             <span class="hint-icon">☝️</span>
-            <span class="hint-text">Waiting for Camera...</span>
+            <span class="hint-text">正在启动摄像头...</span>
         </div>
     </div>
 
@@ -366,8 +376,15 @@
                     ctx.fillRect(0,0,512,512);
                     ctx.strokeStyle = '#ffd700'; ctx.lineWidth = 20;
                     ctx.strokeRect(10,10,492,492);
-                    ctx.fillStyle = 'white'; ctx.font = '80px Arial'; ctx.textAlign = 'center'; ctx.textBaseline='middle';
-                    ctx.fillText(`${2023}.${i%12 + 1}`, 256, 256);
+                    // Use a more standard font for Chinese characters if needed, but Arial works
+                    ctx.fillStyle = 'white'; 
+                    ctx.font = '80px Arial'; 
+                    ctx.textAlign = 'center'; 
+                    ctx.textBaseline='middle';
+                    ctx.fillText(`${2023}.${i%12 + 1}`, 256, 200);
+                    
+                    ctx.font = '60px "Noto Serif SC", serif';
+                    ctx.fillText(`记忆碎片 #${i + 1}`, 256, 320);
                     
                     const tex = new THREE.CanvasTexture(canvas);
                     this.addPhotoToScene(tex, i, count);
@@ -504,11 +521,11 @@
                 
                 camera.start()
                     .then(() => {
-                        hint.innerHTML = `<span class="hint-icon">🙌</span><span class="hint-text">Show Hands to Start</span>`;
+                        hint.innerHTML = `<span class="hint-icon">🙌</span><span class="hint-text">请举起双手唤醒魔法</span>`;
                     })
                     .catch(err => {
                         console.error(err);
-                        hint.innerHTML = `<span class="hint-icon">⚠️</span><span class="hint-text">Camera Blocked by Browser Security</span>`;
+                        hint.innerHTML = `<span class="hint-icon">⚠️</span><span class="hint-text">浏览器阻止了摄像头访问</span>`;
                     });
             }
 
@@ -539,13 +556,13 @@
                             this.toggledRecently = true;
                             setTimeout(() => this.toggledRecently = false, 2000);
                         }
-                        hint.innerHTML = `<span class="hint-icon">⚡</span><span class="hint-text">Mode Switched</span>`;
+                        hint.innerHTML = `<span class="hint-icon">⚡</span><span class="hint-text">场景已切换</span>`;
                     } else if (dist > 0.4) {
                         this.camera.position.z = THREE.MathUtils.lerp(this.camera.position.z, 20, 0.05);
-                        hint.innerHTML = `<span class="hint-icon">👐</span><span class="hint-text">Zooming In</span>`;
+                        hint.innerHTML = `<span class="hint-icon">👐</span><span class="hint-text">正在放大</span>`;
                     } else if (dist < 0.2) {
                         this.camera.position.z = THREE.MathUtils.lerp(this.camera.position.z, 60, 0.05);
-                        hint.innerHTML = `<span class="hint-icon">🙏</span><span class="hint-text">Zooming Out</span>`;
+                        hint.innerHTML = `<span class="hint-icon">🙏</span><span class="hint-text">正在缩小</span>`;
                     }
                 }
                 // One Hand Interaction
@@ -574,7 +591,7 @@
                     this.checkHover();
 
                     if (!this.hoveredObject) {
-                        hint.innerHTML = `<span class="hint-icon">☝️</span><span class="hint-text">Point at Memories</span>`;
+                        hint.innerHTML = `<span class="hint-icon">☝️</span><span class="hint-text">食指指向照片可查看</span>`;
                     }
                 }
             }
